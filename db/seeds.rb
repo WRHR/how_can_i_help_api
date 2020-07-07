@@ -5,3 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Task.destroy_all
+User.destroy_all
+
+
+will = User.create(name: 'Will', username: 'will', password: 'password')
+
+Task.create(title: "Help me!", description: "I need help doing stuff", volunteersNeeded: 5, user: will)
