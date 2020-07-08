@@ -2,9 +2,9 @@ class TasksController < ApplicationController
     before_action :find_task, only: [:show, :destroy, :update]
 
     def index
-        @tasks = Task.all 
+        @tasks = Task.all
 
-        render json: {tasks: @tasks}
+        render json: @tasks, include: [:volunteers]
     end
 
     def show
@@ -19,10 +19,12 @@ class TasksController < ApplicationController
 
     def update
         @task.update(task_params)
+        render json: { task: @task }
     end
 
     def destroy
         @task.destroy
+        render json: {message: "Successfully removed"}
     end
 
     private
