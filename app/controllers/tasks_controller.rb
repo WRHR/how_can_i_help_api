@@ -4,7 +4,7 @@ class TasksController < ApplicationController
     def index
         @tasks = Task.all
 
-        render json: @tasks, include: [:volunteers]
+        render json: TaskSerializer.new( @tasks )
     end
 
     def show
