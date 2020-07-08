@@ -1,19 +1,12 @@
 class ApplicationController < ActionController::API
     def authenticate
-        header = request.headers["Authorization"]
-        token = header.split(' ')[1]
-
-        if !token
-            render json: { error : "You must be logged in to do this" }, status: :unauthorized
-        else
-            secret = Rails.application.secret_key_base
-
-            begin 
-                payload = JWT.decode(token, secret)
-                @user = User.find(payload['user_id'])
-            rescue
-                render json: { error: "YOu must be logged in to do this"}, status: :unauthorized
-            end
-        end
+       secret = Rails.application.secret_key_base
+       token = request.headers["Authorization"]
+       if !token
+            render json: { error: "You must be logged in to do this."}, status: :unauthorized
+       else
+            decoded_token = JWT.decode(token.split(' ')[1], secret)[0]
+            @user = User.find(decoded_token["user_id"])
+       end
     end
 end

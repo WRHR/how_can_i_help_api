@@ -12,7 +12,8 @@ class VolunteersController < ApplicationController
     end
 
     def create
-        @volunteer = Volunteer.create(volunteer_params)
+        authenticate 
+        @volunteer = Volunteer.create(task_id: params[:task_id], user_id: @user.id)
         render json: { volunteer: @volunteer}
     end
 
@@ -25,10 +26,6 @@ class VolunteersController < ApplicationController
 
     def find_volunteer
         @volunteer = Volunteer.find(params[:id])
-    end
-
-    def volunteer_params
-        params.require(:volunteer).permit(:task_id, :user_id)
     end
 
 end

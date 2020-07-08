@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
     before_action :find_task, only: [:show, :destroy, :update]
+    before_action :authenticate, only: [:create, :destroy, :update]
 
     def index
         @tasks = Task.all
@@ -12,13 +13,22 @@ class TasksController < ApplicationController
     end
 
     def create
-        @task = Task.create(task_params)
+        @task = Task.create(
+            title: params[:title],
+            description: params[:description],
+            volunteersNeeded: params[:volunteersNeeded],
+            user_id: @user.id
+        )
 
         render json: {task: @task}
     end
 
     def update
-        @task.update(task_params)
+        @task.update(
+            title: params[:title],
+            description: params[:description],
+            volunteersNeeded: params[:volunteersNeeded],
+        )
         render json: { task: @task }
     end
 
@@ -28,10 +38,6 @@ class TasksController < ApplicationController
     end
 
     private
-
-    def task_params
-        params.require(:task).permit(:title, :description, :volunteersNeeded, :user_id)
-    end
 
     def find_task
         @task = Task.find(params[:id])
