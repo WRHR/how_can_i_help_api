@@ -1,7 +1,7 @@
 class TaskSerializer
   include FastJsonapi::ObjectSerializer
   attributes :title, :description, :volunteersNeeded
-  attribute :user do |task|
+  attribute :creator do |task|
     UserSerializer.new(task.user)
   end
   attribute :helpers do |task|
