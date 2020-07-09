@@ -14,7 +14,7 @@ class VolunteersController < ApplicationController
     def create
         authenticate 
         @volunteer = Volunteer.create(task_id: params[:task_id], user_id: @user.id)
-        render json: { volunteer: @volunteer}
+        render json: {message: 'Thanks for Helping!'}
     end
 
     def destroy
