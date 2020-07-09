@@ -2,7 +2,11 @@ class UsersController < ApplicationController
     def create
         @user = User.create(user_params)
 
-        render json: { user: @user, message: "Account Created! Please Log In!" }, status: :created
+        if !@user.save
+            render json: { error: "Username is already taken"}, status: :bad_request
+        else
+            render json: { user: @user, message: "Account Created! Please Log In!" }, status: :created
+        end
     end
 
     private
