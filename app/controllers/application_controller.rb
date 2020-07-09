@@ -5,8 +5,12 @@ class ApplicationController < ActionController::API
        if !token
             render json: { error: "You must be logged in to do this."}, status: :unauthorized
        else
-            decoded_token = JWT.decode(token.split(' ')[1], secret)[0]
-            @user = User.find(decoded_token["user_id"])
+          if token.split(' ')[1] == 'null'
+             render json: { error: "You must be logged in to do this."}, status: :unauthorized
+          else
+               decoded_token = JWT.decode(token.split(' ')[1], secret)[0]
+               @user = User.find(decoded_token["user_id"])
+          end
        end
     end
 end
