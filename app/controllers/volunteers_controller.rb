@@ -1,5 +1,6 @@
 class VolunteersController < ApplicationController
-    before_action :require_login, only: [:create]
+    before_action :authenticate, only: [:create]
+
     before_action :find_volunteer, only: [:destroy, :show]
 
     def index
@@ -11,8 +12,8 @@ class VolunteersController < ApplicationController
         render json: { volunteer: @volunteer }
     end
 
-    def create
-        authenticate 
+    def create 
+        require_login
         @volunteer = Volunteer.create(task_id: params[:task_id], user_id: @user.id)
         render json: {message: 'Thanks for Helping!'}
     end
