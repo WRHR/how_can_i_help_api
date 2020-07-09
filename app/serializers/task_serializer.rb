@@ -7,4 +7,8 @@ class TaskSerializer
   attribute :helpers do |task|
     task.users.map{ |user| UserSerializer.new(user) }
   end
+  attribute :volunteerData do |task|
+    task.volunteers
+  end
+
 end

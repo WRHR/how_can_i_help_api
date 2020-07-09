@@ -1,5 +1,5 @@
 class VolunteersController < ApplicationController
-    before_action :authenticate, only: [:create]
+    before_action :authenticate, only: [:create, :destroy]
 
     before_action :find_volunteer, only: [:destroy, :show]
 
