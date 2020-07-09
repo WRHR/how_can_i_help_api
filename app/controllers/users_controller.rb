@@ -2,7 +2,7 @@ class UsersController < ApplicationController
     def create
         @user = User.create(user_params)
 
-        render json: { user: @user }
+        render json: { user: @user, message: "Account Created! Please Log In!" }
     end
 
     private

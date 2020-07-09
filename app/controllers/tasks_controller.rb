@@ -9,7 +9,7 @@ class TasksController < ApplicationController
     end
 
     def show
-        render json: {task: @task}
+        render json: TaskSerializer.new( @task )
     end
 
     def create
