@@ -1,5 +1,5 @@
 class VolunteersController < ApplicationController
-
+    before_action :require_login, only: [:create]
     before_action :find_volunteer, only: [:destroy, :show]
 
     def index
@@ -26,6 +26,12 @@ class VolunteersController < ApplicationController
 
     def find_volunteer
         @volunteer = Volunteer.find(params[:id])
+    end
+
+    def require_login
+        if !@user
+            render json: {error: 'You must be logged in to help'}, status: :unauthorized
+        end
     end
 
 end
